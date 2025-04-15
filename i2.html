@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram Profile Scraper</title>
+    <style>
+        body { font-family: sans-serif; }
+        .container { width: 600px; margin: 50px auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .result-container { margin-top: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #fff; }
+        .result-container h3 { margin-top: 0; color: #333; }
+        .result-container p { margin-bottom: 5px; color: #555; }
+        .error { color: red; font-weight: bold; margin-bottom: 10px; }
+        .message { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram Profile Scraper</h1>
+
+        {% if scraped_data %}
+        <div class="result-container">
+            <h3>Scraped Data</h3>
+            {% if scraped_data.error %}
+                <p class="error">{{ scraped_data.error }}</p>
+            {% else %}
+                <p><strong>Username:</strong> {{ scraped_data.username }}</p>
+                <p><strong>Followers:</strong> {{ scraped_data.followers }}</p>
+                <p><strong>Following:</strong> {{ scraped_data.following }}</p>
+                <p><strong>Total Posts:</strong> {{ scraped_data.total_posts }}</p>
+                <p><strong>Private:</strong> {% if scraped_data.private %}Yes{% else %}No{% endif %}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if message %}
+        <p class="message">{{ message }}</p>
+        {% endif %}
+
+        <h2>Enter Instagram Profile URL</h2>
+        <form method="POST" action="/scrape">
+            <div class="form-group">
+                <label for="profileUrl">Instagram Profile URL:</label>
+                <input type="text" id="profileUrl" name="profileUrl" size="60" required>
+            </div>
+            <button type="submit">Scrape Profile</button>
+        </form>
+    </div>
+</body>
+</html>
